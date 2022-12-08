@@ -216,5 +216,146 @@ let user = new User();
 
  */
 
-// stop
-// https://learn.javascript.ru/optional-chaining//
+
+//Опциональная цепочка '?.'
+
+/*
+
+
+У большинства наших пользователей есть адреса
+в свойстве user.address с
+улицей user.address.street, но некоторые из них их не указали.
+в общем эта штука позволяет безопасно обращться к undefined
+
+
+ */
+{
+    let user = {name:"user"};
+    let user2 = {};
+
+    console.log("user",user.name)
+    console.log("user2",user2.name)
+    //тут словим type error
+    // console.log("user2",user2.name.address)
+    //а тут нет т.к  ?. немедленно останавливает
+    // вычисление, если левая часть не существует.
+    console.log("user2 name?.adress",user2?.name?.address)
+    console.log("user adress",user?.name?.address)
+
+
+    //при проверке методов тоже так можно делать
+    //но процедура проверки выглядит так
+    //и поэтому нужно быть внимательным
+
+    let userAdmin = {
+        admin() {
+            console.log("Я админ");
+        }
+    };
+
+    let userGuest = {};
+
+    userAdmin.admin?.(); // Я админ
+
+    userGuest.admin?.(); // ничего не произойдет (такого метода нет)
+
+}
+    /*
+    Синтаксис ?.[] также работает, если мы
+    хотим использовать скобки [] для доступа к
+    свойствам вместо точки .. Как и в предыдущих случаях,
+    он позволяет безопасно считывать
+    свойство из объекта, который может не существовать.
+     */
+{
+    let key = "firstName";
+
+    let user1 = {
+        firstName: "John"
+    };
+
+    let user2 = null;
+
+    console.log( user1?.[key] ); // John
+    console.log( user2?.[key] ); // undefined
+
+
+    //// ReferenceError: user is not defined
+    // user?.address;
+
+
+    delete user?.name; // удаляет user.name если пользователь существует
+}
+
+/*
+Мы можем использовать ?. для безопасного
+чтения и удаления, но не для записи
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
