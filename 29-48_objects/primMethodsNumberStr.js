@@ -87,18 +87,429 @@ roma.sayHi(); // Привет, дружище!
 
     alert( typeof new Number(0) ); // "object"!
     */
+}
 
+//numbers
+{
+    /*
+    Обычные числа в JavaScript хранятся в 64-битном
+    формате IEEE-754, который также называют «числа с
+    плавающей точкой двойной точности» (double precision
+    floating point numbers). Это числа, которые мы будем использовать
+    чаще всего. Мы поговорим о них в этой главе.
+
+BigInt числа дают возможность работать с целыми числами
+произвольной длины. Они нужны достаточно редко и
+используются в случаях, когда необходимо работать со
+значениями более чем (2^53-1) или менее чем -(2^53-1). Так как BigInt числа нужны достаточно редко, мы рассмотрим их в отдельной главе BigInt.
+     */
+    console.log("///////////////NUMBERS///////////////")
+    let billion = 1000000000;
+    let billion2 = 1e9;
+    console.log(billion,billion2);
+    //alert( 7.3e9 );  // 7.3 миллиардов (7,300,000,000)
+    let ms = 0.000001;
+    let ms2 = 1e-6;
+
+    console.log(ms,ms2)
+    //alert( 0xff ); // 255
+    // let a = 0b11111111; // бинарная форма записи числа 255
+    // let b = 0o377; // восьмеричная форма записи числа 255
+    //toString переводит число в строку в нужной системе счисления
+    let num = 123456;
+    console.log(num.toString(36))
+    console.log(123456..toString(2))
+    console.log(123456..toString(8))
+    console.log(123456..toString(16))
+
+    console.log(-0===0);
+    console.log("NaN===NaN",NaN===NaN);
+    console.log(isNaN(NaN));
+
+    console.log(6.35.toFixed(1));
+    console.log(1.35.toFixed(1));
+    console.log(Math.round(6.35 * 10) / 10 );
+}
+
+/*
+В JavaScript есть несколько встроенных функций для работы с округлением:
+
+Math.floor
+Округление в меньшую сторону: 3.1 становится 3, а -1.1 — -2.
+Math.ceil
+Округление в большую сторону: 3.1 становится 4, а -1.1 — -1.
+Math.round
+Округление до ближайшего целого: 3.1 становится 3, 3.6 — 4, а -1.1 — -1.
+Math.trunc (не поддерживается в Internet Explorer)
+Производит удаление дробной части без округления:
+3.1 становится 3, а -1.1 — -1.
+
+Метод toFixed(n) округляет число до n знаков
+ после запятой и возвращает строковое представление результата.
+
+let num = 12.34;
+alert( num.toFixed(1) ); // "12.3"
+
+let num = 12.36;
+alert( num.toFixed(1) ); // "12.4"
+
+ */
+
+
+/*
+Если число слишком большое,
+оно переполнит 64-битное хранилище, JavaScript вернёт бесконечность:
+
+alert( 1e500 ); // Infinity
+
+Посмотрите на это (неверное!) сравнение:
+alert( 0.1 + 0.2 == 0.3 ); // false
+
+Два нуля
+Другим забавным следствием внутреннего
+ представления чисел является наличие двух нулей: 0 и -0.
+
+Все потому, что знак представлен отдельным битом, так
+что, любое число может быть положительным и отрицательным, включая нуль.
+
+В большинстве случаев это поведение незаметно, так как
+операторы в JavaScript воспринимают их одинаковыми.
+
+Infinity (и -Infinity) — особенное численное значение, которое ведёт себя
+ в точности как математическая бесконечность ∞.
+NaN представляет ошибку.
+
+isNaN(value) преобразует значение в число и
+проверяет является ли оно NaN:
+
+
+Нужна ли нам эта функция? Разве не можем ли мы
+ просто сравнить === NaN? К сожалению, нет. Значение
+NaN уникально тем, что оно не является равным ничему другому
+, даже самому себе:
+
+ */
+
+//а это вполне полезные функции, особенно для случаев когда нужно будет
+//проверить число
+{
+    // Методы Number.isNaN и Number.isFinite – это более
+    //«строгие» версии функций isNaN и isFinite.
+    //Они не преобразуют аргумент в число,
+    //а наоборот – первым делом проверяют,
+    //является ли аргумент числом
+    //(принадлежит ли он к типу number).
+    console.log("strict number.isnan")
+    console.log( Number.isNaN(NaN) ); // true
+    console.log( Number.isNaN("str" / 2) ); // true
+
+// Обратите внимание на разный результат:
+    console.log( Number.isNaN("str") ); // false, так как "str" является строкой, а не числом
+    console.log( isNaN("str") ); // true,
+    console.log( isNaN(123) ); // false,
+    console.log("strict number.isfinite ")
+    console.log( Number.isFinite(123) ); // true
+    console.log( Number.isFinite(Infinity) ); // false
+    console.log( Number.isFinite(2 / 0) ); // false
+
+// Обратите внимание на разный результат:
+    console.log( Number.isFinite("123") ); // false, так как "123" является строкой, а не числом
+    console.log( isFinite("123") ); // true, так как isFinite сначала преобразует строку "123" в число 123
+
+}
+
+//parseInt и parseFloat
+{
+    /*
+    Для явного преобразования к числу можно использовать + или
+    Number(). Если  строка не является в точности числом,
+    то результат будет NaN:
+     */
+
+    console.log("//parseInt и parseFloat")
+    console.log( parseInt('100px') ); // 100
+    console.log( parseFloat('12.5em') ); // 12.5
+
+    console.log( parseInt('12.3') ); // 12, вернётся только целая часть
+    console.log( parseFloat('12.3.4') ); // 12.3, произойдёт остановка чтения на второй точке
+
+    /*
+    Функции parseInt/parseFloat
+    вернут NaN, если не смогли прочитать ни одну цифру:
+     */
+
+
+    /*
+    Второй аргумент parseInt(str, radix)
+    Функция parseInt() имеет необязательный второй параметр.
+    Он определяет систему счисления, таким образом
+    parseInt может также читать строки с шестнадцатеричными числами,
+    двоичными числами и т.д.:
+     */
+
+    /*
+    random
+     */
+
+    console.log("Math.random()")
+    console.log(Math.random())
+    console.log(Math.random())
+    console.log(Math.random())
+    //документация по math
+    //https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math
+
+
+    function randomInteger(min, max) {
+        // получить случайное число от (min-0.5) до (max+0.5)
+        let rand = min - 0.5 + Math.random() * (max - min + 1);
+        return Math.round(rand);
+    }
+
+    function RandomInteger(min, max) {
+        // случайное число от min до (max+1)
+        let rand = min + Math.random() * (max + 1 - min);
+        return Math.floor(rand);
+    }
+
+    console.log(randomInteger(1,3))
+    console.log(RandomInteger(1,3))
+
+}
+
+{
+    console.log("///////STRINGS//////////")
+    /*
+    Внутренний формат для строк — всегда
+    UTF-16, вне зависимости от кодировки страницы.
+     */
+
+    let str = "some value";
+    let single = 'single-quoted "ww"';
+    let double = "double-quoted 'ww'";
+    let backticks = `backticks ""'' ${str}`;
+    //отображаться будет точно также, не нужно указывать \n
+    let guestList = `Guests:
+ * John
+ * Pete
+ * Mary
+`;
+    console.log(single);
+    console.log(double);
+    console.log(backticks);
+    console.log(guestList);
+
+
+
+    //есть такая штука как фаблонные функции
+    //но хз насколько это полезно в реальности
+    //https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Template_literals#%D0%A2%D0%B5%D0%B3%D0%BE%D0%B2%D1%8B%D0%B5_%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D1%8B
+    function template(strings, ...keys) {
+        return (function(...values) {
+            let dict = values[values.length - 1] || {};
+            let result = [strings[0]];
+            keys.forEach(function(key, i) {
+                let value = Number.isInteger(key) ? values[key] : dict[key];
+                result.push(value, strings[i + 1]);
+            });
+            return result.join('');
+        });
+    }
+
+    let t1Closure = template`${0}${1}${0}!`;
+    t1Closure('Y', 'A');  // "YAY!"
+
+    console.log( t1Closure('Y', 'A'));
+
+
+    //Длина строки
+    // /`My\n`.length
+    //length — это свойство а не метод
+
+    // Доступ к символам
+    let hello = `Hello`;
+    console.log("///STR.AT///")
+    //плюс этой функции в том, что можно
+    //использовать отрицательные индексы
+    console.log( hello[-2] ); // undefined
+    console.log( hello.at(-2) ); // l
+
+
+    for (let char of "Hello") {
+        console.log(char); // H,e,l,l,o (char — сначала "H", потом "e", потом "l" и т.д.)
+    }
+
+}
+
+//Строки неизменяемы
+{
+    let str = 'Hi';
+    //Error: Cannot assign to read only property '0' of string 'Hi'
+    // str[0] = 'h'; // ошибка
+    console.log( str[0] ); // не работает
+    /*
+
+    Можно создать новую строку и записать её в
+    ту же самую переменную вместо старой.
+
+    let str = 'Hi';
+    str = 'h' + str[1]; // заменяем строку
+     */
+
+}
+
+//methods
+//.toUpperCase()
+//.toLowerCase()
+//Поиск подстроки
+// Существует несколько способов поиска подстроки.
+//
+// str.indexOf
+// Первый метод — str.indexOf(substr, pos).
+//второй аргумент позволяет начать поиск с определённой позиции.
+{
+    {
+        let str = 'Widget with id';
+        console.log( str.indexOf('id', 2) ) // 12
+    }
+    {
+        let str = 'Ослик Иа-Иа посмотрел на виадук';
+
+        let target = 'Иа'; // цель поиска
+
+        let pos = 0;
+        while (true) {
+            let foundPos = str.indexOf(target, pos);
+            if (foundPos === -1) break;
+
+            console.log( `Найдено тут: ${foundPos}` );
+            pos = foundPos + 1; // продолжаем со следующей позиции
+        }
+    }
+
+    /*
+    Также есть похожий метод str.lastIndexOf(substr, position),
+    который ищет с конца строки к её началу.
+     */
+
+    /*
+    Более современный метод str.includes(substr, pos) возвращает
+     true, если в строке str есть подстрока substr, либо false, если нет.
+
+    Это — правильный выбор, если нам необходимо проверить, есть ли совпадение,
+    но позиция не нужна:
+
+    Методы str.startsWith и str.endsWith проверяют, соответственно,
+    начинается ли и заканчивается ли строка определённой строкой:
+
+     */
+
+    //Получение подстроки
+    //str.slice(start [, end])
+    //let str = "stringify";
+    // alert( str.slice(2) ); // ringify, с позиции 2 и до конца
+
+    /*
+    str.substring(start [, end])
+    Возвращает часть строки между start и end (не включая) end.
+
+    Это — почти то же, что и slice, но можно задавать start больше end.
+    Если start больше end, то метод substring сработает так, как если бы
+    аргументы были поменяны местами.
+
+
+Отрицательные значения substring, в отличие от slice, не поддерживает,
+они интерпретируются как 0.
+
+str.substr(start [, length])
+Возвращает часть строки от start длины length.
+
+В противоположность предыдущим методам, этот позволяет указать длину вместо конечной позиции:
+
+let str = "stringify";
+// ring, получаем 4 символа, начиная с позиции 2
+alert( str.substr(2, 4) ); //ring
+
+
+
+метод	выбирает…	отрицательные значения
+slice(start, end)	от start до end (не включая end)	можно передавать отрицательные значения
+substring(start, end)	между start и end	отрицательные значения равнозначны 0
+substr(start, length)	length символов, начиная от start	значение start может быть отрицательным
+
+
+     */
+
+/*
+Сравнение строк
+Как мы знаем, строки сравниваются посимвольно в алфавитном порядке.
+
+Тем не менее, есть некоторые нюансы.
+
+Строчные буквы больше заглавных:
+Буквы, имеющие диакритические знаки, идут «не по порядку»:
+
+Это может привести к своеобразным результатам при сортировке названий стран:
+нормально было бы ожидать, что Zealand будет после Österreich в списке.
+
+Чтобы разобраться, что происходит, давайте ознакомимся с внутренним представлением строк
+ в JavaScript.
+
+Строки кодируются в UTF-16. Таким образом, у любого символа есть соответствующий код.
+Есть специальные методы, позволяющие получить символ по его коду и наоборот.
+str.codePointAt(pos)
+Возвращает код для символа, находящегося на позиции pos
+
+
+let str = '';
+
+for (let i = 65; i <= 220; i++) {
+  str += String.fromCodePoint(i);
+}
+alert( str );
+// ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+// ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜ
+
+Как видите, сначала идут заглавные буквы, затем
+несколько спецсимволов, затем строчные и Ö ближе к концу вывода.
+
+Правильное сравнение
+
+Вызов str.localeCompare(str2) возвращает число, которое показывает,
+ какая строка больше в соответствии с правилами языка:
+
+Отрицательное число, если str меньше str2.
+Положительное число, если str больше str2.
+0, если строки равны.
+
+alert( 'Österreich'.localeCompare('Zealand') ); // -1
+
+
+ */
+
+
+    console.log(~-4)
+    /*
+    Трюк с побитовым НЕ
+    Существует старый трюк с использованием побитового оператора НЕ — ~. Он преобразует
+    число в 32-разрядное целое со знаком (signed 32-bit integer).
+    Дробная часть, в случае, если она присутствует, отбрасывается. Затем все
+    биты числа инвертируются.
+
+    На практике это означает простую вещь: для 32-разрядных
+    целых чисел значение ~n равно -(n+1).
+
+    const a = 5;     // 00000000000000000000000000000101
+    const b = -3;    // 11111111111111111111111111111101
+
+    console.log(~a); // 11111111111111111111111111111010
+    // expected output: -6
+
+    console.log(~b); // 00000000000000000000000000000010
+    // expected output: 2
+     */
 
 
 
 
 }
-
-
-
-
-
-
-
-
 
