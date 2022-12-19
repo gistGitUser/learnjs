@@ -248,3 +248,76 @@
     console.log(usersById)
 
 }
+
+{
+    console.log("//////sumSalaries/////")
+
+    function sumSalaries(s){
+        return Object.values(s).reduce((sum, current) => {
+            return sum + current
+        }, 0)
+
+        // let result = 0;
+        // for (let value of Object.values(s)) {
+        //     result += value; // John, затем 30
+        // }
+        //
+        // return result
+
+    }
+
+    let salaries = {
+        "John": 100,
+        "Pete": 300,
+        "Mary": 250
+    };
+
+
+    console.log(sumSalaries(salaries));
+}
+
+{
+    console.log("//////count/////");
+    let user = {
+        name: 'John',
+        age: 30
+    };
+    function count(c){
+        return Object.keys(c).length
+    }
+
+    console.log(count(user))
+
+}
+
+{
+    function topSalary(salaries){
+        let max = -1;
+        let obj = -1;
+        for (let entr of Object.entries(salaries)){
+
+            [n,s] = entr;
+            if (s > max){
+                max = s;
+                obj = entr;
+            }
+        }
+
+        if (max === -1){
+            return null;
+        }
+
+        return obj;
+
+    }
+
+    console.log("//////////let salaries////////")
+
+    let salaries = {
+        "John": 100,
+        "Pete": 300,
+        "Mary": 250
+    };
+
+    console.log(topSalary(salaries))
+}
