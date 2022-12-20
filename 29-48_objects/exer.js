@@ -321,3 +321,84 @@
 
     console.log(topSalary(salaries))
 }
+{
+    /*
+    Напишите функцию getLastDayOfMonth(year, month),
+    возвращающую последнее число
+    месяца. Иногда это 30, 31 или даже февральские 28/29.
+     */
+    function getLastDayOfMonth(year, month) {
+        let date = new Date(year, month + 1, 0);
+        return date.getDate();
+    }
+
+    function getSecondsToday() {
+        let now = new Date();
+
+        // создаём объект с текущими днём/месяцем/годом
+        let today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+        let diff = now - today; // разница в миллисекундах
+        return Math.round(diff / 1000); // получаем секунды
+    }
+
+    function getSecondsToTomorrow() {
+        let now = new Date();
+
+        // завтрашняя дата
+        let tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1);
+
+        let diff = tomorrow - now; // разница в миллисекундах
+        return Math.round(diff / 1000); // преобразуем в секунды
+    }
+
+    //or
+    /*
+    function getSecondsToTomorrow() {
+  let now = new Date();
+  let hour = now.getHours();
+  let minutes = now.getMinutes();
+  let seconds = now.getSeconds();
+  let totalSecondsToday = (hour * 60 + minutes) * 60 + seconds;
+  let totalSecondsInADay = 86400;
+
+  return totalSecondsInADay - totalSecondsToday;
+}
+     */
+
+
+}
+
+{
+    //Исключить обратные ссылки
+    let room = {
+        number: 23
+    };
+
+    let meetup = {
+        title: "Совещание",
+        occupiedBy: [{name: "Иванов"}, {name: "Петров"}],
+        place: room
+    };
+
+    room.occupiedBy = meetup;
+    meetup.self = meetup;
+
+    //есть несколько вариантов для обхода циклических ссылок
+
+    console.log( JSON.stringify(meetup, function replacer(key, value) {
+        return (key != "" && value == meetup) ? undefined : value;
+    }));
+
+    console.log( JSON.stringify(meetup, function replacer(key, value) {
+        return (this.occupiedBy == room.occupiedBy && key != 'number' || key == 'self' ) ? undefined : value;
+    }));
+
+    /*
+    {
+      "title":"Совещание",
+      "occupiedBy":[{"name":"Иванов"},{"name":"Петров"}],
+      "place":{"number":23}
+    }
+    */
+}
