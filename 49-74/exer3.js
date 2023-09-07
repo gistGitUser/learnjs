@@ -44,4 +44,42 @@ users.sort((a, b) => a.age > b.age ? 1 : -1);
     users.sort(byField('age'));
     users.forEach(user => console.log(user.name)); // Pete, Ann, John
 
+
+}
+{
+    //Сумма с произвольным количеством скобок
+    function sum(a){
+        let c_sum = a;
+
+        c = function(b){
+          c_sum+=b;
+          return c   
+        }
+
+        f.toString = function(){
+            return currentSum;
+        }
+
+        return c
+    }
+
+    function sum(a) {
+
+        let currentSum = a;
+      
+        function f(b) {
+          currentSum += b;
+          return f;
+        }
+      
+        f.toString = function() {
+          return currentSum;
+        };
+      
+        return f;
+      }
+      
+
+    // let a = 
+    console.log(String(sum(1)(2)(1)))
 }
