@@ -48,20 +48,6 @@ users.sort((a, b) => a.age > b.age ? 1 : -1);
 }
 {
     //Сумма с произвольным количеством скобок
-    function sum(a){
-        let c_sum = a;
-
-        c = function(b){
-          c_sum+=b;
-          return c   
-        }
-
-        f.toString = function(){
-            return currentSum;
-        }
-
-        return c
-    }
 
     function sum(a) {
 
